@@ -1,5 +1,5 @@
 {
-  "name": "edt-iut-calais-grabber",
+  "name": "planning-iut-calais",
   "version": "1.0.0",
   "description": "A microservice that screenshots periodically Calais's IUT planning and serves it 📅",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "rigwild <contact@asauvage.fr>",
   "license": "MIT",
   "dependencies": {
     "cron": "^1.7.1",
