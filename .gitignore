@@ -1,0 +1,5 @@
+node_modules
+screenshots
+package-lock.json
+config.js
+db.json
