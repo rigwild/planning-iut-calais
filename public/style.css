@@ -15,7 +15,7 @@ tr, .table-warning, .table-warning > td, .table-warning > th {
   transition: background-color .3s ease !important;
 }
 .classes-scrollable {
-  height: 320px;
+  max-height: 320px;
   overflow-y: scroll;
 }
 .show-classes-button {
