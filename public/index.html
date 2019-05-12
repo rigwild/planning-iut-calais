@@ -4,15 +4,109 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>planning-iut-calais</title>
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+  <link type="text/css" rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div id="app">
-    <pre>{{ JSON.stringify(screenshots, null,2) }}</pre>
+  <div id="app" class="pt-2" v-cloak>
+    <b-container>
+      <h2 class="text-center">planning-iut-calais</h2>
+    </b-container>
+    
+    <!-- Page loader -->
+    <b-container
+      v-if="classes.length === 0"
+      class="text-center"
+    >
+      Loading classes list...
+    </b-container>
+    <!--/ Page loader -->
+
+    <!-- Screenshot -->
+    <b-container v-else fluid>
+      <b-container>
+        <b-row class="my-1">
+          <b-col :cols="showClasses ? 2 : 12" class="show-classes-button">
+            <a
+              @click.prevent="showClasses = !showClasses"
+              class="pointer not-selectable pr-1"
+              :title="`${showClasses ? 'Hide': 'Show'} classes`"
+            >
+              {{ showClasses ? '🙉' : '🙈' }}
+            </a>
+            {{ showClasses ? '' : 'Show classes' }}
+          </b-col>
+          <b-col v-if="showClasses" cols="10">
+            <b-form-group class="mb-0">
+              <b-input-group>
+                <b-form-input v-model="filter" placeholder="Search a class"></b-form-input>
+                <b-input-group-append>
+                  <b-button :disabled="!filter" @click="filter = ''">✖</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        
+        <div v-if="showClasses" class="classes-scrollable">
+          <b-table
+            show-empty
+            :items="classes"
+            :fields="fields"
+            :filter="filter"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            :sort-direction="sortDirection"
+            :tbody-tr-class="rowClass"
+            striped
+            outlined
+            small
+            hover
+            foot-clone
+            fixed
+            >
+            <template slot="class" slot-scope="row">
+              <span :title="row.value">
+                {{ row.value.length > 23 ? `${row.value.slice(0, 23).trim()}...` : row.value }}
+              </span>
+            </template>
+            
+            <template slot="action" slot-scope="row">
+              <div class="not-selectable">
+                <a @click.prevent="showScreenshot(row.item)" class="pointer" title="Show planning">👁️</a>
+                <a @click.prevent="setDefault(row.item.id)" class="pointer" title="Set as default class">{{ favorite(row.item.default) }}</a>
+                <a :href="row.item.screenPath" class="pointer no-underline" title="Open screenshot image">🔗</a>
+              </div>
+            </template>
+          </b-table>
+        </div>
+      </b-container>
+      
+      <b-container v-if="visibleScreenshot" fluid>
+        <b-img :src="visibleScreenshot" fluid-grow />
+      </b-container>
+    </b-container>
+    <!--/ Screenshot -->
+    
+    <!-- GitHub -->
+    <b-container class="text-right font-italic">
+      <b-button
+        variant="link"
+        href="https://github.com/rigwild/planning-iut-calais"
+        target="_blank"
+        rel="noopener"
+      >
+        Available on GitHub
+      </b-button>
+    </b-container>
+    <!--/ GitHub -->
   </div>
   
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
+  <!-- <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script> -->
+  <script src="//unpkg.com/vue@latest/dist/vue.js"></script>
+  <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
   <script src="./script.js"></script>
 </body>
 </html>

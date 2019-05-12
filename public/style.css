@@ -1,0 +1,26 @@
+[v-cloak] {
+  display: none;
+}
+.pointer:hover {
+  cursor: pointer;
+}
+.not-selectable {
+  user-select: none;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+tr, .table-warning, .table-warning > td, .table-warning > th {
+  transition: background-color .3s ease !important;
+}
+.classes-scrollable {
+  height: 320px;
+  overflow-y: scroll;
+}
+.show-classes-button {
+  align-items: center;
+  vertical-align: middle;
+  display: inline-flex;
+  height: 38px;
+}

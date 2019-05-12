@@ -1,7 +1,7 @@
 {
   "name": "planning-iut-calais",
   "version": "1.0.0",
-  "description": "A microservice that screenshots periodically Calais's IUT planning and serves it 📅",
+  "description": "A microservice that periodically screenshots Calais's IUT planning and serves it 📅",
   "main": "index.js",
   "scripts": {
     "start": "node index.js --server --service",

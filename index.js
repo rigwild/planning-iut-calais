@@ -5,7 +5,7 @@ const screenshotPlannings = require('./lib')
 const server = require('./server')
 const { cronTime } = require('./config')
 
-const argv = process.argv.splice(2)
+const argv = process.argv.slice(2)
 
 if (argv.includes('--service')) {
   // Start the screenshotting service

@@ -10,15 +10,15 @@ module.exports = () => {
   // Serve screenshots
   app.use('/screenshots', express.static(screenshotDir))
 
-  // Serve screenshots data
-  app.get('/screenshotsData', async (req, res) => {
+  // Serve classes data
+  app.get('/classes', async (req, res) => {
     res.set('Content-Type', 'application/json')
 
     const exists = await fs.pathExists(dbPath)
-    if (!exists) return res.json({ screenshots: {} })
+    if (!exists) return res.json({ classes: {} })
 
-    const { screenshots } = require(dbPath)
-    res.json({ screenshots })
+    const { classes } = require(dbPath)
+    res.json({ classes })
   })
 
   // Serve application
