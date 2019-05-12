@@ -1,9 +1,8 @@
 
 module.exports = {
   parserOptions: {
-    parser: 'babel-eslint',
     ecmaVersion: 2019,
-    sourceType: 'module'
+    sourceType: 'script'
   },
 
   root: true,
@@ -18,6 +17,7 @@ module.exports = {
     // The following rules point out areas where you might have made mistakes.
     'comma-dangle': 1,
     'no-cond-assign': 2,
+    'no-console': 0,
     'no-constant-condition': 2,
     'no-control-regex': 2,
     'no-debugger': 2,

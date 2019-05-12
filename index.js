@@ -2,7 +2,18 @@
 
 const CronJob = require('cron').CronJob
 const screenshotPlannings = require('./lib')
-const { planningLink, cronTime } = require('./config')
+const server = require('./server')
+const { cronTime } = require('./config')
 
-new CronJob(cronTime, () => screenshotPlannings(planningLink, false), null, true, null, null, true)
-console.log('Started the cron job.')
+const argv = process.argv.splice(2)
+
+if (argv.includes('--service')) {
+  // Start the screenshotting service
+  new CronJob(cronTime, () => screenshotPlannings(argv.includes('--no-headless')), null, true, null, null, true)
+  console.log('Started the cron job.')
+}
+
+if (argv.includes('--server')) {
+  // Start the server
+  server()
+}

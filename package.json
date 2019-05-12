@@ -4,13 +4,17 @@
   "description": "A microservice that screenshots periodically Calais's IUT planning and serves it 📅",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js --server --service",
+    "start:server": "node index.js --server",
+    "start:service": "node index.js --service",
+    "start:service:show": "node index.js --service --no-headless",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rigwild <contact@asauvage.fr>",
   "license": "MIT",
   "dependencies": {
     "cron": "^1.7.1",
+    "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "lowdb": "^1.0.0",
     "node-fetch": "^2.5.0",
