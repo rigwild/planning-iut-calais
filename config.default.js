@@ -7,5 +7,6 @@ module.exports = {
   screenshotDir: path.resolve(__dirname, 'screenshots'),
   dbPath: path.resolve(__dirname, 'db.json'),
   planningLink: '',
-  cronTime: '0 */4 * * *' // Every 4 hours
+  cronTime: '0 */4 * * *', // Every 4 hours
+  isVPS: false
 }
