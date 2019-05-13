@@ -17,7 +17,7 @@ module.exports = () => {
     const exists = await fs.pathExists(dbPath)
     if (!exists) return res.json({ classes: {} })
 
-    const { classes } = require(dbPath)
+    const { classes } = JSON.parse(await fs.promises.readFile(dbPath))
     res.json({ classes })
   })
 
