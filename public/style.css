@@ -19,8 +19,12 @@ tr, .table-warning, .table-warning > td, .table-warning > th {
   overflow-y: scroll;
 }
 .show-classes-button {
-  align-items: center;
-  vertical-align: middle;
-  display: inline-flex;
   height: 38px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }

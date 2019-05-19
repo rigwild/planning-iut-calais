@@ -20,6 +20,7 @@ new Vue({ /* eslint-disable-line */
 
       favoriteClassId: null,
       visibleClassId: null,
+      visibleWeek: 1,
       showClasses: true
     }
   },
@@ -30,10 +31,20 @@ new Vue({ /* eslint-disable-line */
       return this.favoriteClassId
     },
     getFavoriteObj() {
+      if (!this.getFavoriteId) return
       return this.classes.find(x => x.id === this.getFavoriteId)
     },
+
     getVisibleClassObj() {
+      if (!this.visibleClassId) return
       return this.classes.find(x => x.id === this.visibleClassId)
+    },
+    getVisibleScreenshot() {
+      const visible = this.getVisibleClassObj
+      if (!visible) return
+      let obj = { ...visible, ...visible.weeks[this.visibleWeek] }
+      delete obj.weeks
+      return obj
     }
   },
 
@@ -53,6 +64,11 @@ new Vue({ /* eslint-disable-line */
     getShownIcon(bool) {
       return bool ? '👀' : '👁'
     },
+    getWeekText(weekInt) {
+      if (weekInt < 1 || weekInt > 4) return
+      return ['Current week', 'One week from now', 'Two weeks from now', 'Three weeks from now'][weekInt - 1]
+    },
+
     cropText(text, limit = 23) {
       return text.length > limit ? `${text.slice(0, limit).trim()}...` : text
     },

@@ -62,7 +62,7 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col v-else cols="6" class="show-classes-button">💖 : {{ getFavoriteObj ? cropText(getFavoriteObj.class, 10) : 'None.' }}</b-col>
+          <b-col v-else cols="6" class="show-classes-button text-right">💖 : {{ getFavoriteObj ? cropText(getFavoriteObj.class, 10) : 'None.' }}</b-col>
         </b-row>
         <!--/ Classes header controls -->
         
@@ -116,14 +116,26 @@
       </b-container>
 
       <!-- Screenshot -->
-      <b-container v-if="getVisibleClassObj" fluid class="text-center">
-        <h6 class="my-2">{{ getVisibleClassObj.class }}</h6>
+      <b-container v-if="getVisibleScreenshot" fluid class="text-center">
+        <h6>{{ getVisibleScreenshot.class }}</h6>
+        <div class="d-flex justify-content-between">
+          <span @click="visibleWeek > 1 && visibleWeek--" class="not-selectable pointer" :class="{ invisible: visibleWeek <= 1 }">⬅</span>
+          <span>{{ getWeekText(visibleWeek) }}</span>
+          <span @click="visibleWeek < 4 && visibleWeek++" class="not-selectable pointer" :class="{ invisible: visibleWeek >= 4 }">➡</span>
+        </div>
+        <div class="mb-2">Last update: {{ toReadableDate(new Date(getVisibleScreenshot.screenDate)) }}</div>
         <div>
-          <a :href="getVisibleClassObj.screenPath" title="Open the screenshot">
-            <b-img :src="getVisibleClassObj.screenPath" fluid-grow />
+          <a :href="getVisibleScreenshot.screenPath" title="Open the screenshot">
+            <transition name="fade" mode="out-in">
+              <b-img
+              :src="getVisibleScreenshot.screenPath"
+              :key="`screenshot-${getVisibleScreenshot.class}-${visibleWeek}`"
+              class="not-selectable"
+              fluid-grow
+              />
+            </transition>
           </a>
         </div>
-        <div class="mt-2">Last update: {{ toReadableDate(new Date(getVisibleClassObj.screenDate)) }}</div>
         <div class="my-3">
           <span class="font-italic">Tip: Click on the image and add the URL to your browser's favorites or your home screen!<br>
             The image will be automagically updated every 4 hours</span> 😉
@@ -147,8 +159,8 @@
     <!--/ GitHub -->
   </div>
 
-  <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-  <!-- <script src="//unpkg.com/vue@latest/dist/vue.js"></script> -->
+  <!-- <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script> -->
+  <script src="//unpkg.com/vue@latest/dist/vue.js"></script>
   <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
   <script src="./script.js"></script>
 </body>
