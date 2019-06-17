@@ -8,6 +8,7 @@
     "start:server": "node index.js --server",
     "start:service": "node index.js --service",
     "start:service:show": "node index.js --service --no-headless",
+    "clean": "rm -rf db.json screenshots",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rigwild <contact@asauvage.fr>",
