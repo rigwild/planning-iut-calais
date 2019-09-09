@@ -83,13 +83,13 @@
             foot-clone
             responsive
             >
-            <template slot="class" slot-scope="row">
+            <template v-slot:cell(class)="row">
               <span :title="row.value">
                 {{ cropText(row.item.class) }}
               </span>
             </template>
 
-            <template slot="show" slot-scope="row">
+            <template v-slot:cell(show)="row">
               <div class="not-selectable">
                 <a @click.prevent="showScreenshot(row.item)" class="pointer" title="Show planning">
                   {{ getShownIcon(visibleClassId === row.item.id) }}
@@ -97,7 +97,7 @@
               </div>
             </template>
 
-            <template slot="favorite" slot-scope="row">
+            <template v-slot:cell(favorite)="row">
               <div class="not-selectable">
                 <a @click.prevent="setFavorite(row.item.id)" class="pointer" title="Set as favorite class">
                   {{ getFavoriteIcon(row.item.favorite) }}
@@ -105,7 +105,7 @@
               </div>
             </template>
 
-            <template slot="link" slot-scope="row">
+            <template v-slot:cell(link)="row">
               <div class="not-selectable">
                 <a :href="row.item.screenPath" class="pointer no-underline" title="Open screenshot image">🔗</a>
               </div>
@@ -159,8 +159,8 @@
     <!--/ GitHub -->
   </div>
 
-  <!-- <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script> -->
-  <script src="//unpkg.com/vue@latest/dist/vue.js"></script>
+  <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+  <!-- <script src="//unpkg.com/vue@latest/dist/vue.js"></script> -->
   <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
   <script src="./script.js"></script>
 </body>
