@@ -18,6 +18,7 @@ const screenClasses = async (page: Page) => {
 
   // Click on a week so the weeks buttons get the 'aria-pressed' attribute
   await page.mouse.click(370, viewport.y - 30)
+  await delay(1000)
 
   // Calculate current week number
   const currentWeek = getCurrentWeekNumber()

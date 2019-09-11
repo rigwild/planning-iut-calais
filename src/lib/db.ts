@@ -12,10 +12,10 @@ class Database {
     this.db = <lowdb.LowdbSync<{ classes: {} }> & { set: (...args: any) => any }>lowdb(adapter)
   }
 
-  setScreenshot(aClass: string, weeks: { screenPath: string, screenDate: Date }[]) {
-    const classId = toKebabCase(aClass)
+  setScreenshot(className: string, weeks: { screenPath: string, screenDate: Date }[]) {
+    const classId = toKebabCase(className)
     this.db.set(`classes.${classId}`, {
-      class: aClass,
+      class: className,
       weeks: {
         1: weeks[0],
         2: weeks[1],
