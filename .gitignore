@@ -1,5 +1,5 @@
 node_modules
 screenshots
-package-lock.json
-config.js
+.env
 db.json
+dist
