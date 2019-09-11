@@ -2,7 +2,7 @@
 
 const favoriteKey = 'favorite-class'
 
-new Vue({ /* eslint-disable-line */
+new Vue({
   el: '#app',
   data() {
     return {
@@ -69,7 +69,7 @@ new Vue({ /* eslint-disable-line */
       return ['Current week', 'One week from now', 'Two weeks from now', 'Three weeks from now'][weekInt - 1]
     },
 
-    cropText(text, limit = 23) {
+    cropText(text, limit = 28) {
       return text.length > limit ? `${text.slice(0, limit).trim()}...` : text
     },
     // Convert a date object to a human-readable date
@@ -124,4 +124,4 @@ new Vue({ /* eslint-disable-line */
   }
 })
 
-Vue.config.devtools = true /* eslint-disable-line */
+// Vue.config.devtools = true

@@ -41,15 +41,14 @@ const screenClass = async (page: Page) => {
 
   let classScreenshots = []
 
+  // Enhance page style
+  await page.addStyleTag({ content: '* { font-family: Helvetica, Arial, sans-serif !important; }' })
+
   // Screenshot 4 weeks for the current class
   for (let i = 1; i <= 4; i++) {
     // Click on the current loop's week
     await selectWeekAde(page, currentWeek - 1 + i)
     await delay(3000)
-
-    // Enhance page style
-    await page.evaluate(() =>
-      Array.from(document.querySelectorAll('*')).forEach(ele => ((<HTMLElement>ele).style.fontFamily = 'Helvetica, Arial, sans-serif')))
 
     console.log(`Taking a screenshot of the planning of "${className}", week ${i}...`)
     const screenPath = await screenshot(page, `${classId}-${i}`, planningEleClip)

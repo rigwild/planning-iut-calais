@@ -41,7 +41,7 @@ export const getCurrentWeekNumber = () => {
  * @param clip Crop configuration of the screenshot
  * @returns URI path to the screenshot
  */
-export const screenshot = async (page: Page, fileNameNoExt: string, clip: BoundingBox) => {
+export const screenshot = async (page: Page, fileNameNoExt: string, clip?: BoundingBox) => {
   const fileName = `${fileNameNoExt}.png`
   const screenPath = path.resolve(SCREENSHOT_DIR_PATH, fileName)
   await fs.ensureFile(screenPath)
