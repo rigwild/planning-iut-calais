@@ -35,7 +35,7 @@ const screenClass = async (page: Page) => {
   const planningEleClip = {
     x: boundingBox.x,
     y: boundingBox.y,
-    width: Math.min(boundingBox.width, viewport.x) - 463,
+    width: Math.min(boundingBox.width, viewport.x) - 463 + 230,
     height: Math.min(boundingBox.height, viewport.y) - 110
   }
 
