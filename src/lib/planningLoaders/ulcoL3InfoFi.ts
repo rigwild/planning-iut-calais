@@ -5,7 +5,7 @@ import db from '../db'
 import { PLANNING_LINK_ULCO } from '../../config'
 
 const rawClassName = 'LICENCE 3 STS INFORMATIQUE/INFORMATIQUE A CALAIS'
-const className = 'LICENCE 3 INFO FI - ULCO'
+const className = 'L3 FI'
 const classId = 'ulco-l3-info-fi'
 
 /**

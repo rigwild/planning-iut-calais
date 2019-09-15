@@ -4,7 +4,7 @@ import { delay, screenshot } from '../utils'
 import db from '../db'
 import { PLANNING_LINK_ULCO_L3_APP } from '../../config'
 
-const className = 'LICENCE 3 INFO APP - ULCO'
+const className = 'L3 APP'
 const classId = 'ulco-l3-info-app'
 
 /**
