@@ -8,15 +8,16 @@ import { delay } from './utils'
 
 /**
  * Get the planning
- * @param {Boolean} [visible=false] Should the browser be visible
- * @returns {Promise<void>} Main script done
+ * @param visible Should the browser be visible
+ * @returns Main script done
  */
-const setup = async (visible = false) => {
+const setup = async (visible: boolean = false): Promise<void> => {
   console.log(`${new Date().toLocaleString()} - The screenshotting service process is starting...`)
 
   const browser = await puppeteer.launch({
     headless: !visible,
-    args: isVPS ? ['--no-sandbox'] : undefined
+    args: isVPS ? ['--no-sandbox'] : undefined,
+    executablePath: process.env.WSL_DISTRO_NAME ? 'chrome.exe' : undefined
   })
 
   try {

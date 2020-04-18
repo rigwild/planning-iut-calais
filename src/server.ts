@@ -7,6 +7,12 @@ import { SERVER_PORT, SCREENSHOT_DIR_PATH, DATABASE_PATH } from './config'
 export default () => {
   const app = express()
 
+  // Open CORS
+  app.use(require('cors')({ origin: true }))
+
+  // Log requests
+  app.use(require('morgan')('combined'))
+
   // Serve screenshots
   app.use('/screenshots', express.static(SCREENSHOT_DIR_PATH))
 
@@ -17,7 +23,7 @@ export default () => {
     const exists = await fs.pathExists(DATABASE_PATH)
     if (!exists) return res.json({ classes: {} })
 
-    const { classes } = JSON.parse(await fs.promises.readFile(DATABASE_PATH, 'utf-8'))
+    const { classes } = await fs.readJSON(DATABASE_PATH, { encoding: 'utf-8' })
     res.json({ classes })
   })
 
