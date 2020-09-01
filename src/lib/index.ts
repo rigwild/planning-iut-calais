@@ -16,7 +16,7 @@ const setup = async (visible: boolean = false): Promise<void> => {
 
   const browser = await puppeteer.launch({
     headless: !visible,
-    args: isVPS ? ['--no-sandbox'] : undefined,
+    args: isVPS ? ['--no-sandbox', '--disable-setuid-sandbox'] : undefined,
     executablePath: process.env.WSL_DISTRO_NAME ? 'chrome.exe' : undefined
   })
 
