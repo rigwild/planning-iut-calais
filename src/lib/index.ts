@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer'
 
 import iutPlanningLoader from './planningLoaders/iut'
 import ulcoL3InfoFiPlanningLoader from './planningLoaders/ulcoL3InfoFi'
-import ulcoL3InfoAppPlanningLoader from './planningLoaders/ulcoL3InfoApp'
+import ulcoM1I2LPlanningLoader from './planningLoaders/ulcoM1I2L'
 import { isVPS } from '../config'
 import { delay } from './utils'
 
@@ -33,6 +33,9 @@ const setup = async (visible: boolean = false): Promise<void> => {
 
     console.log(`${new Date().toLocaleString()} - Screenshotting the planning of ULCO Licence 3 Informatique APP...\n`)
     await ulcoL3InfoAppPlanningLoader(page)
+
+    console.log(`${new Date().toLocaleString()} - Screenshotting the planning of ULCO Master 1 I2L...\n`)
+    await ulcoM1I2L(page)
 
     console.log(`${new Date().toLocaleString()} - The screenshotting service process finished.\n`)
   }
