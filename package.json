@@ -1,6 +1,6 @@
 {
   "name": "planning-iut-calais",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "private": true,
   "description": "A microservice that periodically screenshots Calais's IUT planning using Puppeteer and serves it 📅",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "build": "tsc",
     "clean": "rm -rf db.json screenshots"
   },
-  "author": "rigwild <contact@asauvage.fr>",
+  "author": "rigwild <me@rigwild.dev>",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",

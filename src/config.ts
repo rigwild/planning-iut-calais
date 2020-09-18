@@ -14,6 +14,7 @@ export const {
   PLANNING_LINK_ULCO,
   PLANNING_LINK_ULCO_L3_APP,
   PLANNING_LINK_ULCO_M1_I2L,
+  PLANNING_LINK_ULCO_M2_I2L,
   SCREENSHOT_SERVICE_CRONTIME
 } = <{ [key: string]: string }>process.env
 

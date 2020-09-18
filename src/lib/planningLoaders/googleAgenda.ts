@@ -2,18 +2,17 @@ import { Page } from 'puppeteer'
 
 import { delay, screenshot } from '../utils'
 import db from '../db'
-import { PLANNING_LINK_ULCO_M1_I2L } from '../../config'
-
-const className = 'M1 I2L'
-const classId = 'ulco-m1-i2l'
 
 /**
  * Get the planning
  * @param page Puppeteer page object
+ * @param className Full class name
+ * @param classId Class identifier
+ * @param planningUri Google Agenda URI
  * @returns Main script done
  */
-const setup = async (page: Page) => {
-  await page.goto(PLANNING_LINK_ULCO_M1_I2L)
+const setup = async (page: Page, className: string, classId: string, planningUri: string) => {
+  await page.goto(planningUri)
   await delay(500)
 
   // Search for the class

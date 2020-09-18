@@ -2,9 +2,9 @@ import puppeteer from 'puppeteer'
 
 import iutPlanningLoader from './planningLoaders/iut'
 import ulcoL3InfoFiPlanningLoader from './planningLoaders/ulcoL3InfoFi'
-import ulcoL3InfoAppPlanningLoader from './planningLoaders/ulcoL3InfoApp'
-import ulcoM1I2LPlanningLoader from './planningLoaders/ulcoM1I2L'
-import { isVPS } from '../config'
+import googleAgenda from './planningLoaders/googleAgenda'
+
+import { isVPS, PLANNING_LINK_ULCO_M1_I2L, PLANNING_LINK_ULCO_M2_I2L, PLANNING_LINK_ULCO_L3_APP } from '../config'
 import { delay } from './utils'
 
 /**
@@ -33,17 +33,18 @@ const setup = async (visible: boolean = false): Promise<void> => {
     await ulcoL3InfoFiPlanningLoader(page)
 
     console.log(`${new Date().toLocaleString()} - Screenshotting the planning of ULCO Licence 3 Informatique APP...\n`)
-    await ulcoL3InfoAppPlanningLoader(page)
+    await googleAgenda(page, 'L3 APP', 'ulco-l3-info-app', PLANNING_LINK_ULCO_L3_APP)
 
     console.log(`${new Date().toLocaleString()} - Screenshotting the planning of ULCO Master 1 I2L...\n`)
-    await ulcoM1I2LPlanningLoader(page)
+    await googleAgenda(page, 'M1 I2L', 'ulco-m1-i2l', PLANNING_LINK_ULCO_M1_I2L)
+
+    console.log(`${new Date().toLocaleString()} - Screenshotting the planning of ULCO Master 2 I2L...\n`)
+    await googleAgenda(page, 'M2 I2L', 'ulco-m2-i2l', PLANNING_LINK_ULCO_M2_I2L)
 
     console.log(`${new Date().toLocaleString()} - The screenshotting service process finished.\n`)
-  }
-  catch (err) {
+  } catch (err) {
     throw err
-  }
-  finally {
+  } finally {
     console.log('Closing the browser...')
     await browser.close()
   }
