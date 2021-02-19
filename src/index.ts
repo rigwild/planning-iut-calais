@@ -1,8 +1,10 @@
+import fs from 'fs-extra'
+import path from 'path'
 import { CronJob } from 'cron'
 
 import screenshotPlannings from './lib'
 import server from './server'
-import { SCREENSHOT_SERVICE_CRONTIME } from './config'
+import { DATABASE_CLEAR_SERVICE_CRONTIME, SCREENSHOT_SERVICE_CRONTIME } from './config'
 
 const argv = process.argv.slice(2)
 
@@ -14,6 +16,18 @@ if (argv.includes('--service')) {
     undefined,
     true,
     undefined,
+    undefined,
+    true
+  )
+  new CronJob(
+    DATABASE_CLEAR_SERVICE_CRONTIME,
+    async () => {
+      const screenshotsDir = path.resolve(__dirname, '..', 'screenshots')
+      const dbPath = path.resolve(__dirname, '..', 'db.json')
+      await fs.remove(screenshotsDir)
+      await fs.mkdir(screenshotsDir)
+      await fs.remove(dbPath)
+    },
     undefined,
     true
   )
