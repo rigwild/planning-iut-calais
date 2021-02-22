@@ -1,6 +1,6 @@
 {
   "name": "planning-iut-calais",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "private": true,
   "description": "A microservice that periodically screenshots Calais's IUT planning using Puppeteer and serves it 📅",
   "main": "index.js",
