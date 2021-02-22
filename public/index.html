@@ -1,167 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Planning IUT Calais</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Planning IUT Calais</title>
 
-  <link rel="apple-touch-icon" sizes="120x120" href="./favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-  <link rel="manifest" href="./favicon/site.webmanifest">
-  <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
-  <link rel="shortcut icon" href="./favicon/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="Planning IUT Calais">
-  <meta name="application-name" content="Planning IUT Calais">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-config" content="./favicon/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="120x120" href="./favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png" />
+    <link rel="manifest" href="./favicon/site.webmanifest" />
+    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5" />
+    <link rel="shortcut icon" href="./favicon/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="Planning IUT Calais" />
+    <meta name="application-name" content="Planning IUT Calais" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="./favicon/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
 
-  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-  <link type="text/css" rel="stylesheet" href="./style.css" />
-</head>
-<body>
-  <div id="app" class="pt-2" v-cloak>
-    <b-container>
-      <h2 class="text-center">Planning IUT Calais</h2>
-    </b-container>
-
-    <!-- Page loader -->
-    <b-container
-      v-if="classes.length === 0"
-      class="text-center"
-    >
-      Loading classes list...
-    </b-container>
-    <!--/ Page loader -->
-
-    <!-- Page content -->
-    <b-container v-else fluid>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <link type="text/css" rel="stylesheet" href="./style.css" />
+    <script
+      async
+      defer
+      data-website-id="daf9bc27-f81a-4c03-9973-cdf2eedeff0d"
+      src="https://umami.rigwild.dev/umami.js"
+    ></script>
+  </head>
+  <body>
+    <div id="app" class="pt-2" v-cloak>
       <b-container>
-        <!-- Classes header controls -->
-        <b-row class="my-1">
-          <b-col :cols="showClasses ? 2 : 6" class="show-classes-button">
+        <h2 class="text-center">Planning IUT Calais</h2>
+      </b-container>
+
+      <!-- Page loader -->
+      <b-container v-if="classes.length === 0" class="text-center">Loading classes list... </b-container>
+      <!--/ Page loader -->
+
+      <!-- Page content -->
+      <b-container v-else fluid>
+        <b-container>
+          <!-- Classes header controls -->
+          <b-row class="my-1">
+            <b-col :cols="showClasses ? 2 : 6" class="show-classes-button">
+              <a
+                @click.prevent="umami('Show/Hide classes button'), showClasses = !showClasses"
+                class="pointer pr-1 not-selectable"
+                :title="`${showClasses ? 'Hide': 'Show'} classes`"
+              >
+                {{ showClasses ? '🙉' : '🙈' }}
+              </a>
+              {{ showClasses ? '' : 'Show classes' }}
+            </b-col>
+            <b-col v-if="showClasses" cols="10">
+              <b-form-group class="mb-0">
+                <b-input-group>
+                  <b-form-input v-model="filter" placeholder="Search a class"></b-form-input>
+                  <b-input-group-append>
+                    <b-button :disabled="!filter" @click="filter = ''">✖</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+            <b-col v-else cols="6" class="show-classes-button text-right"
+              >💖 : {{ getFavoriteObj ? cropText(getFavoriteObj.class, 10) : 'None.' }}</b-col
+            >
+          </b-row>
+          <!--/ Classes header controls -->
+
+          <!-- Classes table -->
+          <div v-if="showClasses" class="classes-scrollable mb-1">
+            <b-table
+              show-empty
+              :items="classes"
+              :fields="fields"
+              :filter="filter"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+              :sort-direction="sortDirection"
+              :tbody-tr-class="rowClass"
+              striped
+              outlined
+              hover
+              foot-clone
+              responsive
+            >
+              <template v-slot:cell(class)="row">
+                <span :title="row.value"> {{ cropText(row.item.class) }} </span>
+              </template>
+
+              <template v-slot:cell(show)="row">
+                <div class="not-selectable">
+                  <a
+                    @click.prevent="umami('Show class planning button'), umami(`Show class: ${row.item.class}`), showScreenshot(row.item)"
+                    class="pointer"
+                    title="Show planning"
+                  >
+                    {{ getShownIcon(visibleClassId === row.item.id) }}
+                  </a>
+                </div>
+              </template>
+
+              <template v-slot:cell(favorite)="row">
+                <div class="not-selectable">
+                  <a
+                    @click.prevent="umami('Set as favorite button'), umami(`Set as favorite: ${cropText(row.item.class)}`), setFavorite(row.item.id)"
+                    class="pointer"
+                    title="Set as favorite class"
+                  >
+                    {{ getFavoriteIcon(row.item.favorite) }}
+                  </a>
+                </div>
+              </template>
+
+              <template v-slot:cell(link)="row">
+                <div class="not-selectable">
+                  <a
+                    @click.prevent="umamiThenRedirect('Open screenshot image button', row.item.screenPath)"
+                    :href="row.item.screenPath"
+                    class="pointer no-underline"
+                    title="Open screenshot image"
+                    >🔗</a
+                  >
+                </div>
+              </template>
+            </b-table>
+          </div>
+          <!--/ Classes table -->
+        </b-container>
+
+        <!-- Screenshot -->
+        <b-container v-if="getVisibleScreenshot" fluid class="text-center">
+          <h6>{{ getVisibleScreenshot.class }}</h6>
+          <div class="d-flex justify-content-between">
+            <span
+              @click="umami('Previous week button'), visibleWeek > 1 && visibleWeek--"
+              class="not-selectable pointer"
+              :class="{ invisible: visibleWeek <= 1 }"
+              >⬅</span
+            >
+            <span>{{ getWeekText(visibleWeek) }}</span>
+            <span
+              @click="umami('Next week button'), visibleWeek < 4 && visibleWeek++"
+              class="not-selectable pointer umami--click--next-week-button"
+              :class="{ invisible: visibleWeek >= 4 }"
+              >➡</span
+            >
+          </div>
+          <div class="mb-2">Last update: {{ toReadableDate(new Date(getVisibleScreenshot.screenDate)) }}</div>
+          <div>
             <a
-              @click.prevent="showClasses = !showClasses"
-              class="pointer pr-1 not-selectable"
-              :title="`${showClasses ? 'Hide': 'Show'} classes`"
+              @click.prevent="umamiThenRedirect('Open planning screenshot', getVisibleScreenshot.screenPath)"
+              :href="getVisibleScreenshot.screenPath"
+              title="Open the screenshot"
             >
-              {{ showClasses ? '🙉' : '🙈' }}
+              <transition name="fade" mode="out-in">
+                <b-img
+                  :src="getVisibleScreenshot.screenPath"
+                  :key="`screenshot-${getVisibleScreenshot.class}-${visibleWeek}`"
+                  class="not-selectable"
+                  fluid-grow
+                />
+              </transition>
             </a>
-            {{ showClasses ? '' : 'Show classes' }}
-          </b-col>
-          <b-col v-if="showClasses" cols="10">
-            <b-form-group class="mb-0">
-              <b-input-group>
-                <b-form-input v-model="filter" placeholder="Search a class"></b-form-input>
-                <b-input-group-append>
-                  <b-button :disabled="!filter" @click="filter = ''">✖</b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
-          <b-col v-else cols="6" class="show-classes-button text-right">💖 : {{ getFavoriteObj ? cropText(getFavoriteObj.class, 10) : 'None.' }}</b-col>
-        </b-row>
-        <!--/ Classes header controls -->
-        
-        <!-- Classes table -->
-        <div v-if="showClasses" class="classes-scrollable mb-1">
-          <b-table
-            show-empty
-            :items="classes"
-            :fields="fields"
-            :filter="filter"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="sortDesc"
-            :sort-direction="sortDirection"
-            :tbody-tr-class="rowClass"
-            striped
-            outlined
-            hover
-            foot-clone
-            responsive
+          </div>
+          <div class="my-3">
+            <span class="font-italic"
+              >Tip: Click on the image and add the URL to your browser's favorites or your home screen!<br />
+              The image will be automagically updated every 4 hours</span
             >
-            <template v-slot:cell(class)="row">
-              <span :title="row.value">
-                {{ cropText(row.item.class) }}
-              </span>
-            </template>
-
-            <template v-slot:cell(show)="row">
-              <div class="not-selectable">
-                <a @click.prevent="showScreenshot(row.item)" class="pointer" title="Show planning">
-                  {{ getShownIcon(visibleClassId === row.item.id) }}
-                </a>
-              </div>
-            </template>
-
-            <template v-slot:cell(favorite)="row">
-              <div class="not-selectable">
-                <a @click.prevent="setFavorite(row.item.id)" class="pointer" title="Set as favorite class">
-                  {{ getFavoriteIcon(row.item.favorite) }}
-                </a>
-              </div>
-            </template>
-
-            <template v-slot:cell(link)="row">
-              <div class="not-selectable">
-                <a :href="row.item.screenPath" class="pointer no-underline" title="Open screenshot image">🔗</a>
-              </div>
-            </template>
-          </b-table>
-        </div>
-        <!--/ Classes table -->
+            😉
+          </div>
+        </b-container>
+        <!--/ Screenshot -->
       </b-container>
+      <!--/ Page content -->
 
-      <!-- Screenshot -->
-      <b-container v-if="getVisibleScreenshot" fluid class="text-center">
-        <h6>{{ getVisibleScreenshot.class }}</h6>
-        <div class="d-flex justify-content-between">
-          <span @click="visibleWeek > 1 && visibleWeek--" class="not-selectable pointer" :class="{ invisible: visibleWeek <= 1 }">⬅</span>
-          <span>{{ getWeekText(visibleWeek) }}</span>
-          <span @click="visibleWeek < 4 && visibleWeek++" class="not-selectable pointer" :class="{ invisible: visibleWeek >= 4 }">➡</span>
-        </div>
-        <div class="mb-2">Last update: {{ toReadableDate(new Date(getVisibleScreenshot.screenDate)) }}</div>
-        <div>
-          <a :href="getVisibleScreenshot.screenPath" title="Open the screenshot">
-            <transition name="fade" mode="out-in">
-              <b-img
-              :src="getVisibleScreenshot.screenPath"
-              :key="`screenshot-${getVisibleScreenshot.class}-${visibleWeek}`"
-              class="not-selectable"
-              fluid-grow
-              />
-            </transition>
-          </a>
-        </div>
-        <div class="my-3">
-          <span class="font-italic">Tip: Click on the image and add the URL to your browser's favorites or your home screen!<br>
-            The image will be automagically updated every 4 hours</span> 😉
-        </div>
+      <!-- GitHub -->
+      <b-container class="text-right font-italic">
+        <a
+          @click.prevent="umamiThenRedirect('GitHub link', 'https://github.com/rigwild/planning-iut-calais')"
+          href="https://github.com/rigwild/planning-iut-calais"
+        >
+          Available on GitHub
+        </a>
       </b-container>
-      <!--/ Screenshot -->
-    </b-container>
-    <!--/ Page content -->
+      <!--/ GitHub -->
+    </div>
 
-    <!-- GitHub -->
-    <b-container class="text-right font-italic">
-      <b-button
-        variant="link"
-        href="https://github.com/rigwild/planning-iut-calais"
-        target="_blank"
-        rel="noopener"
-      >
-        Available on GitHub
-      </b-button>
-    </b-container>
-    <!--/ GitHub -->
-  </div>
-
-  <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-  <!-- <script src="//unpkg.com/vue@latest/dist/vue.js"></script> -->
-  <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
-  <script src="./script.js"></script>
-</body>
+    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <!-- <script src="//unpkg.com/vue@latest/dist/vue.js"></script> -->
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
 </html>

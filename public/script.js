@@ -108,8 +108,7 @@ new Vue({
         this.classes[classIndex].favorite = false
         localStorage.removeItem(favoriteKey)
         this.favoriteClassId = null
-      }
-      else {
+      } else {
         this.classes.forEach(x => (x.favorite = false))
         this.classes[classIndex].favorite = true
         localStorage.setItem(favoriteKey, classId)
@@ -120,6 +119,14 @@ new Vue({
     rowClass(item, _type) {
       if (!item) return
       if (item.favorite) return 'table-warning'
+    },
+
+    umami(eventName) {
+      return (window.umami || (() => {}))(eventName)
+    },
+    async umamiThenRedirect(eventName, uri) {
+      this.umami(eventName)
+      window.location.href = uri
     }
   }
 })
